@@ -1,0 +1,13 @@
+name: note
+version: 0.1.0
+
+authors:
+  - Oren <orengolan@gmail.com>
+
+targets:
+  note:
+    main: src/note.cr
+
+crystal: 0.32.1
+
+license: MIT
