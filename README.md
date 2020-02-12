@@ -21,5 +21,7 @@ To open a specific notes file
 ./note ~/m/notes
 ```
 
-
-
+To add date entry
+```
+./note --date
+```
