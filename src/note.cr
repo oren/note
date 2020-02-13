@@ -26,15 +26,13 @@ module Note
 		notes_file = ARGV[0]
 	end
 
+	# add current date to top of file
 	if date
-		if !File.exists?(notes_file)
-			File.new(notes_file,"w")
+		content = ""
+		if File.exists?(notes_file)
+			content = File.read(notes_file)
 		end
-
-		content = File.read(notes_file)
-		# add current date to top of file
-		puts Time.local.to_s("%Y-%m-%d")
-		exit
+		File.write(notes_file, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
 	end
 
 	Process.run(
