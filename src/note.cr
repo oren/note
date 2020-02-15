@@ -39,12 +39,6 @@ class Note
 			@notes_file = user_input.to_s
 		end
 
-		open_vim
-
-		if !ARGV.empty?
-			@notes_file = ARGV[0]
-		end
-
 		# add current date to top of file
 		if @date
 			content = ""
@@ -53,6 +47,8 @@ class Note
 			end
 			File.write(@notes_file, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
 		end
+
+		open_vim
 	end
 
 	def open_vim
