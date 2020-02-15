@@ -5,8 +5,8 @@ require "json"
 class Note
   VERSION = "0.1.0"
 	@date = false
-	@notes_file = "./notes"
-	@config_file = "#{Path.home}/.config/note/config.json"
+	@notes_file_path = "./notes"
+	@config_file_path = "#{Path.home}/.config/note/config.json"
 
 	def run
 		option_parser = OptionParser.parse do |parser|
@@ -26,26 +26,31 @@ class Note
 		end
 
 
-		if File.exists?(@config_file)
-			config = File.read(@config_file)
+		if File.exists?(@config_file_path)
+			config = File.read(@config_file_path)
 			con =  JSON.parse(config)
 
 			if con["note_location"]
-				@notes_file = con["note_location"].to_s
+				@notes_file_path = con["note_location"].to_s
 			end
 		else
 			p "This is the first time you are running the app. Choose location for your notes"
 			user_input = gets
-			@notes_file = user_input.to_s
+			@config_file_path = user_input.to_s
+			# File.write(@config_file_path, {"note_location": "foo"}.to_json, mode: "w")
+
+			File.open(@config_file_path, "w") do |file|
+				{"note_location": "foo"}.to_json file
+			end
 		end
 
 		# add current date to top of file
 		if @date
 			content = ""
-			if File.exists?(@notes_file)
-				content = File.read(@notes_file)
+			if File.exists?(@notes_file_path)
+				content = File.read(@notes_file_path)
 			end
-			File.write(@notes_file, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
+			File.write(@notes_file_path, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
 		end
 
 		open_vim
@@ -54,7 +59,7 @@ class Note
 	def open_vim
 		Process.run(
 			ENV["EDITOR"],
-			args: {@notes_file},
+			args: {@notes_file_path},
 			input: Process::Redirect::Inherit,
 			output: Process::Redirect::Inherit,
 			error: Process::Redirect::Inherit,
