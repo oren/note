@@ -28,7 +28,14 @@ class Note
 
 		if File.exists?(@config_file_path)
 			config = File.read(@config_file_path)
-			con =  JSON.parse(config)
+
+			con = ""
+			begin
+				con =  JSON.parse(config)
+			rescue ex
+				p "Error trying to parse the config file. #{ex.message}"
+				exit
+			end
 
 			if con["note_location"]
 				@notes_file_path = con["note_location"].to_s
@@ -37,6 +44,7 @@ class Note
 			p "This is the first time you are running the app. Choose location for your notes"
 			user_input = gets
 			@config_file_path = user_input.to_s
+
 			# File.write(@config_file_path, {"note_location": "foo"}.to_json, mode: "w")
 
 			File.open(@config_file_path, "w") do |file|
