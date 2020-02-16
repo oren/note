@@ -33,8 +33,7 @@ class Note
 			begin
 				con =  JSON.parse(config)
 			rescue ex
-				p "Error trying to parse the config file. #{ex.message}"
-				exit
+				abort "Error trying to parse the config file. #{ex.message}"
 			end
 
 			if con["note_location"]
@@ -50,6 +49,7 @@ class Note
 			File.open(@config_file_path, "w") do |file|
 				{"note_location": "foo"}.to_json file
 			end
+
 		end
 
 		# add current date to top of file
