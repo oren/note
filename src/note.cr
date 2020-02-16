@@ -3,7 +3,7 @@ require "system/user"
 require "json"
 
 class Note
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 	@date = false
 	@notes_file_path = "./notes"
 	@config_file_path = "#{Path.home}/.config/note/config.json"
@@ -46,10 +46,7 @@ class Note
 		else
 			p "This is the first time you are running the app. Choose location for your notes. For example ~/misc/note.txt"
 			user_input = gets
-			@notes_file_path = File.expand(user_input.to_s, home = true)
-			p "---"
-			p @notes_file_path
-			p "---"
+			@notes_file_path = File.expand_path(user_input.to_s, home: true)
 
 			File.open(@config_file_path, "w") do |file|
 				{"note_location": @notes_file_path}.to_json file
