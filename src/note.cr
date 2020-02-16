@@ -9,6 +9,7 @@ class Note
 	@config_file_path = "#{Path.home}/.config/note/config.json"
 
 	def run
+		# step 0 - arguments
 		option_parser = OptionParser.parse do |parser|
 			parser.banner = "Note is a notes taking app"
 
