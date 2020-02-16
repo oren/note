@@ -49,17 +49,16 @@ class Note
 			File.open(@config_file_path, "w") do |file|
 				{"note_location": "foo"}.to_json file
 			end
-
 		end
 
-		# add current date to top of file
-		if @date
-			content = ""
-			if File.exists?(@notes_file_path)
-				content = File.read(@notes_file_path)
-			end
-			File.write(@notes_file_path, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
-		end
+		     # add current date to top of file
+     if @date
+				content = ""
+				if File.exists?(@notes_file_path)
+						content = File.read(@notes_file_path)
+				end
+				File.write(@notes_file_path, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
+		 end
 
 		open_vim
 	end
