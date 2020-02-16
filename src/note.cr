@@ -26,6 +26,7 @@ class Note
 		end
 
 
+		# 1. set path for notes file
 		if File.exists?(@config_file_path)
 			config = File.read(@config_file_path)
 
@@ -38,9 +39,11 @@ class Note
 
 			if con["note_location"]
 				@notes_file_path = con["note_location"].to_s
+			else
+				abort "your config file don't have note_location key"
 			end
 		else
-			p "This is the first time you are running the app. Choose location for your notes"
+			p "This is the first time you are running the app. Choose location for your notes. For example ~/misc/note.txt"
 			user_input = gets
 			@notes_file_path = user_input.to_s
 
@@ -49,15 +52,16 @@ class Note
 			end
 		end
 
-		     # add current date to top of file
-     if @date
-				content = ""
-				if File.exists?(@notes_file_path)
-						content = File.read(@notes_file_path)
-				end
-				File.write(@notes_file_path, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
-		 end
+		# 2. add current date to top of file
+		if @date
+			content = ""
+			if File.exists?(@notes_file_path)
+					content = File.read(@notes_file_path)
+			end
+			File.write(@notes_file_path, Time.local.to_s("%Y-%m-%d") + "\n\n" + content)
+		end
 
+		# 3. open vim
 		open_vim
 	end
 
