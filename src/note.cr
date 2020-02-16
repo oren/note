@@ -42,14 +42,10 @@ class Note
 		else
 			p "This is the first time you are running the app. Choose location for your notes"
 			user_input = gets
-			@config_file_path = user_input.to_s
-			p @config_file_path
-			exit
-
-			# File.write(@config_file_path, {"note_location": "foo"}.to_json, mode: "w")
+			@notes_file_path = user_input.to_s
 
 			File.open(@config_file_path, "w") do |file|
-				{"note_location": "foo"}.to_json file
+				{"note_location": @notes_file_path}.to_json file
 			end
 		end
 
