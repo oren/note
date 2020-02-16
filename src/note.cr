@@ -46,7 +46,10 @@ class Note
 		else
 			p "This is the first time you are running the app. Choose location for your notes. For example ~/misc/note.txt"
 			user_input = gets
-			@notes_file_path = user_input.to_s
+			@notes_file_path = File.expand(user_input.to_s, home = true)
+			p "---"
+			p @notes_file_path
+			p "---"
 
 			File.open(@config_file_path, "w") do |file|
 				{"note_location": @notes_file_path}.to_json file
